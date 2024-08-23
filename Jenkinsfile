@@ -3,20 +3,19 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building...'
+                sh 'npm install'
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing...'
+                sh './jenkins/scripts/test.sh'
             }
         }
-        stage('Deploy') {
-            when {
-                branch 'staging'
-            }
+        stage('Deliver') { 
             steps {
-                echo 'Deploying to staging... 12345'
+                sh './jenkins/scripts/deliver.sh' 
+                input message: 'Finished using the web site? (Click "Proceed" to continue)' 
+                sh './jenkins/scripts/kill.sh' 
             }
         }
     }
