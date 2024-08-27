@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the code from the version control
-                git url: 'https://github.com/deepakswins/node-dev.git', branch: 'main'
+                git url: 'https://github.com/lakhwinder555/nodejsfolder.git', branch: 'main'
             }
         }
 
@@ -42,7 +42,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 // Deploy the application by starting the Node.js server
-                sh 'nohup node app.js &'
+                sh 'nohup node demo.js &'
             }
         }
 
