@@ -2,16 +2,17 @@ pipeline {
     agent any
 
     environment {
-        NODE_VERSION = '18.20.4' // Specify the Node.js version you want to use
+        NODE_VERSION = '16.20.4' // Specify the Node.js version you want to use
     }
 
     stages {
         stage('Install Node.js') {
             steps {
                 script {
-                    // Install Node.js
-                    sh 'curl -sL https://deb.nodesource.com/setup_$NODE_VERSION | sudo -E bash -'
-                    sh 'sudo apt-get install -y nodejs'
+                    // Install nvm and Node.js
+                    sh 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash'
+                    sh '. ~/.nvm/nvm.sh && nvm install $NODE_VERSION && nvm use $NODE_VERSION'
+                    sh '. ~/.nvm/nvm.sh && node -v' // Check Node.js version
                 }
             }
         }
@@ -19,8 +20,8 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    // Check if 'package.json' exists and install dependencies
-                    sh 'if [ -f package.json ]; then npm install; fi'
+                    // Install dependencies if package.json exists
+                    sh 'if [ -f package.json ]; then . ~/.nvm/nvm.sh && npm install; fi'
                 }
             }
         }
@@ -29,7 +30,7 @@ pipeline {
             steps {
                 script {
                     // Run the Node.js server
-                    sh 'node server.js &'
+                    sh '. ~/.nvm/nvm.sh && node server.js &'
                 }
             }
         }
