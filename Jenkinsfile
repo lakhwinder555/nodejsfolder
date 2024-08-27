@@ -34,8 +34,15 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Any build steps if needed, for example, bundling your code.
-                sh 'npm run build || echo "No build script found, skipping build"'
+                // Check if a build script is defined in package.json before running it
+                script {
+                    def buildScriptExists = sh(script: 'npm run build -- --help > /dev/null 2>&1', returnStatus: true) == 0
+                    if (buildScriptExists) {
+                        sh 'npm run build'
+                    } else {
+                        echo "No build script found, skipping build"
+                    }
+                }
             }
         }
 
