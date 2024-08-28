@@ -34,13 +34,19 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Check if a build script is defined in package.json before running it
+                // Enhanced build step to ensure that a build script is present
                 script {
                     def buildScriptExists = sh(script: 'npm run build -- --help > /dev/null 2>&1', returnStatus: true) == 0
                     if (buildScriptExists) {
+                        echo 'Build script found, proceeding with build...'
+                        // Execute the build script
                         sh 'npm run build'
+
+                        // Optionally add additional build commands here
+                        // For example, minify assets, compile TypeScript, etc.
+                        // sh 'other-build-command'
                     } else {
-                        echo "No build script found, skipping build"
+                        echo 'No build script found, skipping build'
                     }
                 }
             }
