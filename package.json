@@ -2,12 +2,6 @@
   "name": "nodejsfolder",
   "version": "1.0.0",
   "main": "demo.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "scripts": {
-  "build": "echo \"No build script specified\" && exit 0"
-}
   "author": "",
   "license": "ISC",
   "description": ""
