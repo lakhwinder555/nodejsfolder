@@ -1,10 +1,14 @@
-var http = require('http');
- 
-http.createServer(function (req, res) {
-    res.write("Welcome to DITS");
-    res.end();
-}).listen(4000, function() {
-    console.log("Server is listening on port 4000");
+const { createServer } = require('http');
 
+const hostname = '127.0.0.1';
+const port = 7000;
+
+const server = createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Welcome to you');
 });
- 
+
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
